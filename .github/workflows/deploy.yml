@@ -23,15 +23,15 @@ jobs:
       - name: Installer les dépendances
         run: npm ci
 
-      - name: Vérifier le fichier server.js
+      - name: Vérifier server.js
         run: node --check server.js
 
-      - name: Créer le package de déploiement
-        run: zip -r release.zip server.js counter.json package.json package-lock.json
+      - name: Créer le package ZIP
+        run: zip -r app.zip server.js counter.json package.json package-lock.json
 
-      - name: Déployer sur Azure App Service
+      - name: Déployer sur Azure
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: release.zip
+          package: app.zip
