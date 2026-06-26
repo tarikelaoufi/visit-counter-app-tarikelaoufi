@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-
   workflow_dispatch:
 
 jobs:
@@ -28,7 +27,7 @@ jobs:
         run: node --check server.js
 
       - name: Créer le package de déploiement
-        run: zip -r release.zip . -x "*.git*" ".github/*" "node_modules/*"
+        run: zip -r release.zip server.js counter.json package.json package-lock.json
 
       - name: Déployer sur Azure App Service
         uses: azure/webapps-deploy@v3
