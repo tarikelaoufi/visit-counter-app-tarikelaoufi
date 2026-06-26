@@ -1,0 +1,38 @@
+name: Deploy Node.js App to Azure
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Vérifier le fichier server.js
+        run: node --check server.js
+
+      - name: Créer le package de déploiement
+        run: zip -r release.zip . -x "*.git*" ".github/*" "node_modules/*"
+
+      - name: Déployer sur Azure App Service
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: "NOM-DE-TON-APP-AZURE"
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: release.zip

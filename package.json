@@ -1,0 +1,16 @@
+{
+  "name": "visit-counter-app-tarikelaoufi",
+  "version": "1.0.0",
+  "description": "Compteur de visites Azure réalisé par tarik elaoufi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "tarik el aoufi",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
