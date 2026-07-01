@@ -1,9 +1,10 @@
-name: Deploy Node.js App to Azure
+name: Deploy Node.js JSON Counter
 
 on:
   push:
     branches:
       - main
+
   workflow_dispatch:
 
 jobs:
@@ -23,13 +24,13 @@ jobs:
       - name: Installer les dépendances
         run: npm ci
 
-      - name: Vérifier server.js
-        run: node --check server.js
+      - name: Vérifier index.js
+        run: node --check index.js
 
       - name: Créer le package ZIP
-        run: zip -r app.zip server.js counter.json package.json package-lock.json
+        run: zip -r app.zip index.js visits.json package.json package-lock.json
 
-      - name: Déployer sur Azure
+      - name: Déployer sur Azure App Service
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
